@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Finora | Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h2 id="welcome"></h2>
+
+    <h3>Financial Record</h3>
+
+    <input type="text" id="income" placeholder="Enter Income in ₦">
+    <input type="text" id="expense" placeholder="Enter Expense in ₦">
+
+    <button onclick="saveRecord()">Save Record</button>
+
+    <h3 id="result"></h3>
+
+    <h3>Daily Records</h3>
+    <ul id="records"></ul>
+
+    <h3>Monthly Summary</h3>
+    <p id="monthlySummary">Income: ₦0 | Expense: ₦0 | Balance: ₦0</p>
+
+    <h3>Yearly Summary</h3>
+    <p id="yearlySummary">Income: ₦0 | Expense: ₦0 | Balance: ₦0</p>
+
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
