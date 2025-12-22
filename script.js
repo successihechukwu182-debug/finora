@@ -125,6 +125,120 @@ function updateSummary() {
   document.getElementById("yearlySummary").innerText =
     `Income: ₦${yearlyIncome} | Expense: ₦${yearlyExpense} | Balance: ₦${yearlyIncome - yearlyExpense}`;
 }
+// Populate year filter
+function populateYearFilter() {
+  let yearSelect = document.getElementById("filterYear");
+  let currentYear = new Date().getFullYear();
+  for (let y = currentYear; y >= 2000; y--) {
+    let option = document.createElement("option");
+    option.value = y;
+    option.text = y;
+    yearSelect.add(option);
+  }
+}
+populateYearFilter();
+
+// Save record with category
+function saveRecord() {
+  let incomeInput = document.getElementById("income").value;
+  let expenseInput = document.getElementById("expense").value;
+  let category = document.getElementById("category").value;
+
+  let income = Number(incomeInput.replace(/[^0-9.]/g, ""));
+  let expense = Number(expenseInput.replace(/[^0-9.]/g, ""));
+  let result = document.getElementById("result");
+
+  if (isNaN(income) && isNaN(expense)) {
+    result.innerText = "Enter at least one valid number";
+    result.style.color = "red";
+    return;
+  }
+
+  if (isNaN(income)) income = 0;
+  if (isNaN(expense)) expense = 0;
+
+  let balance = income - expense;
+
+  if (balance > 0) {
+    result.innerText = `Profit: ₦${balance}`;
+    result.style.color = "green";
+  } else if (balance < 0) {
+    result.innerText = `Loss: ₦${Math.abs(balance)}`;
+    result.style.color = "red";
+  } else {
+    result.innerText = "No profit, no loss";
+    result.style.color = "black";
+  }
+
+  let record = {
+    date: new Date().toISOString(),
+    income: income,
+    expense: expense,
+    balance: balance,
+    category: category
+  };
+
+  records.push(record);
+  localStorage.setItem("finoraRecords", JSON.stringify(records));
+
+  displayRecords();
+  clearInputs();
+}
+
+// Display filtered records
+function applyFilter() {
+  let month = document.getElementById("filterMonth").value;
+  let year = document.getElementById("filterYear").value;
+
+  let filteredRecords = records.filter(r => {
+    let d = new Date(r.date);
+    let monthMatch = (month === "all") || (d.getMonth() == month);
+    let yearMatch = (year === "all") || (d.getFullYear() == year);
+    return monthMatch && yearMatch;
+  });
+
+  let list = document.getElementById("records");
+  list.innerHTML = "";
+
+  filteredRecords.forEach(r => {
+    let li = document.createElement("li");
+    li.innerText = `${r.date.slice(0,10)} | ${r.category} | Income: ₦${r.income} | Expense: ₦${r.expense} | Balance: ₦${r.balance}`;
+    list.appendChild(li);
+  });
+
+  updateSummary(filteredRecords);
+}
+
+// Update summary with optional filtered records
+function updateSummary(recordsToUse) {
+  let recs = recordsToUse || records;
+  let monthlyIncome = 0,
+      monthlyExpense = 0,
+      yearlyIncome = 0,
+      yearlyExpense = 0;
+
+  let now = new Date();
+  let currentMonth = now.getMonth();
+  let currentYear = now.getFullYear();
+
+  recs.forEach(r => {
+    let recordDate = new Date(r.date);
+    if (recordDate.getMonth() === currentMonth && recordDate.getFullYear() === currentYear) {
+      monthlyIncome += r.income;
+      monthlyExpense += r.expense;
+    }
+    if (recordDate.getFullYear() === currentYear) {
+      yearlyIncome += r.income;
+      yearlyExpense += r.expense;
+    }
+  });
+
+  document.getElementById("monthlySummary").innerText =
+    `Income: ₦${monthlyIncome} | Expense: ₦${monthlyExpense} | Balance: ₦${monthlyIncome - monthlyExpense}`;
+
+  document.getElementById("yearlySummary").innerText =
+    `Income: ₦${yearlyIncome} | Expense: ₦${yearlyExpense} | Balance: ₦${yearlyIncome - yearlyExpense}`;
+}
 
 // ===== LOGOUT =====
 function logout() {

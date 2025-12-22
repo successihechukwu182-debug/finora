@@ -1,72 +1,19 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: #f1f5f9;
+  font-family: Arial;
+  background: #f4f6f8;
+  padding: 20px;
 }
 
-.container {
-  width: 320px;
-  margin: 80px auto;
+.box {
   background: white;
-  padding: 25px;
+  max-width: 300px;
+  margin: auto;
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-h1, h2 {
-  text-align: center;
-  color: #1f2937;
-}
-
-p {
-  text-align: center;
-}
-
-input {
+input, button {
   width: 100%;
-  padding: 10px;
   margin-top: 10px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 15px;
-  background: #2563eb;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background 0.3s;
-}
-
-button:hover {
-  background: #1e40af;
-}
-
-button.logout {
-  background: #dc2626;
-}
-
-button.logout:hover {
-  background: #991b1b;
-}
-
-ul {
-  list-style: none;
-  padding-left: 0;
-  max-height: 200px;
-  overflow-y: auto;
-  border-top: 1px solid #ccc;
-  margin-top: 10px;
-}
-
-ul li {
-  padding: 5px 0;
-  border-bottom: 1px solid #eee;
-  font-size: 14px;
+  padding: 8px;
 }
