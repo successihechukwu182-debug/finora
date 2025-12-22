@@ -51,3 +51,4 @@ function logout() {
 }
 
 displayRecords();
+<script src="dashboard.js"></script>
